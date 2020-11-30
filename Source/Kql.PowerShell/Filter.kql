@@ -1,0 +1,2 @@
+﻿SecurityLog 
+| where EventId == 4670
