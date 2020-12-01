@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RealTimeKql.PowerShell")]
+[assembly: AssemblyTitle("Kql.PowerShell")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RealTimeKql.PowerShell")]
+[assembly: AssemblyProduct("Kql.PowerShell")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d268dbb4-d052-46c3-b4d2-3874976fd9b0")]
+[assembly: Guid("994f511b-156b-4b34-9ffe-f30c18483047")]
 
 // Version information for an assembly consists of the following four values:
 //
