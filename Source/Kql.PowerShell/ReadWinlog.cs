@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management.Automation;
+using System.Reactive;
 using System.Reactive.Linq;
+using System.Management.Automation;
+using System.Reactive.Kql;
+using System.Reactive.Kql.CustomTypes;
 using Microsoft.EvtxEventXmlScrubber;
+using System.Threading;
+using System.Collections.Concurrent;
 
 namespace Kql.PowerShell
 {
@@ -22,6 +27,12 @@ namespace Kql.PowerShell
         [Parameter(Mandatory = false)]
         public bool ReadExisting;
 
+        private ConcurrentQueue<IDictionary<string, object>> kqlOutput;
+
+        protected override void BeginProcessing()
+        {
+            kqlOutput = new ConcurrentQueue<IDictionary<string, object>>();
+        }
         protected override void ProcessRecord()
         {
             if(Log != null)
@@ -36,14 +47,32 @@ namespace Kql.PowerShell
                 Console.WriteLine("Reading local file: {0}", File);
                 // TODO: add in functionality to process local file
             }
+
+            while(true)
+            {
+                int eventsPrinted = 0;
+                while (kqlOutput.TryDequeue(out IDictionary<string, object> eventOutput))
+                {
+                    PSObject row = new PSObject();
+                    foreach (var pair in eventOutput)
+                    {
+                        row.Properties.Add(new PSNoteProperty(pair.Key, pair.Value));
+                    }
+                    WriteObject(row);
+                    eventsPrinted++;
+
+                    if (eventsPrinted % 10 == 0) { Thread.Sleep(20); }
+                }
+            }
         }
 
         void ProcessStream(IObservable<IDictionary<string, object>> events)
         {
             Console.WriteLine("Processing Stream...");
-            if(Query != null)
+            if (Query != null)
             {
-                // TODO: add in support for rx.kql using kqlnodev3
+                Console.WriteLine("Firing up Rx.Kql with Query: {0}", Query);
+                var node = KqlNodeHub.FromFiles(events, OutputCallback, "WinLog", Query);
             }
             else
             {
@@ -57,6 +86,18 @@ namespace Kql.PowerShell
                     }
                     WriteObject(row);
                 }
+            }
+        }
+
+        private void OutputCallback(KqlOutput obj)
+        {
+            try
+            {
+                kqlOutput.Enqueue(obj.Output);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }

@@ -86,6 +86,10 @@
       <Project>{63c1ea51-f283-4833-9ac9-f7291910b0e5}</Project>
       <Name>EvtxEventXmlScrubber</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rx.Kql\Rx.Kql.csproj">
+      <Project>{8062168c-7623-4d7b-b075-8ae826d88554}</Project>
+      <Name>Rx.Kql</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
