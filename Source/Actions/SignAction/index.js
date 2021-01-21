@@ -26,7 +26,10 @@ async function getbinaries(dir) {
     const fileNames = await readdir(dir);
     let files = new Array(fileNames.length);
     await Promise.all(fileNames.map(async (fileName) => {
-      files.push(`${dir}\\${fileName}`);
+      const extension = fileName.split('.').pop();
+      if(extension == 'exe') {
+        files.push(`${dir}\\${fileName}`);
+      }
     }))
     return files;
   }
