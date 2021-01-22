@@ -40,9 +40,9 @@ jobs:
     - name: Compress Binaries Windows
       run: |
         mkdir ${{ github.workspace }}\ReleaseAssets
-        copy Queries/Windows/* ${{ runner.temp }}\win-x64
+        copy Doc/Queries/Windows/* ${{ runner.temp }}\win-x64
         Compress-Archive -Path ${{ runner.temp }}\win-x64\* -DestinationPath "${{ github.workspace }}\ReleaseAssets\RealTimeKql.v${{ env.version }}.zip"
-        copy Queries/Linux/* ${{ runner.temp }}\linux-x64
+        copy Doc/Queries/Linux/* ${{ runner.temp }}\linux-x64
         cd ReleaseAssets
         tar -czvf "RealTimeKql.v${{ env.version }}.tar.gz" ${{ runner.temp }}\linux-x64\*
         dir "RealTimeKql v${{ env.version }}.*"

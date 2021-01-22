@@ -1,0 +1,5 @@
+Security
+| where EventId == 4688
+| extend ProcessName = extract("^C(.+\\\\)*(.+)\\.(.+)$", 2, tostring(EventData.NewProcessName))
+| extend ParentProcessName  = extract("^C(.+\\\\)*(.+)\\.(.+)$", 2, tostring(EventData.ParentProcessName))
+| project TimeCreated, ParentProcessName, ProcessName
