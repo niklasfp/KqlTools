@@ -1,0 +1,12 @@
+name: 'Update Release Assets Action'
+description: 'Update release assets'
+inputs:
+  token:
+    description: 'Authentication token for updating release'
+    required: true
+  directory:
+    description: 'Directory with binaries to upload'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

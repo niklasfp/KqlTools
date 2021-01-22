@@ -45,4 +45,4 @@ jobs:
         copy Doc/Queries/Linux/* ${{ runner.temp }}\linux-x64
         cd ReleaseAssets
         tar -czvf "RealTimeKql.v${{ env.version }}.tar.gz" ${{ runner.temp }}\linux-x64\*
-        dir "RealTimeKql v${{ env.version }}.*"
+        dir "RealTimeKql.v${{ env.version }}.*"
