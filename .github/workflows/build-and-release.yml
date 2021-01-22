@@ -46,3 +46,10 @@ jobs:
         cd ReleaseAssets
         tar -czvf "RealTimeKql.v${{ env.version }}.tar.gz" ${{ runner.temp }}\linux-x64\*
         dir "RealTimeKql.v${{ env.version }}.*"
+
+    # Upload compressed binaries to latest release
+    - name: Update Release Step
+      uses: ./Source/Actions/UpdateReleaseAction
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        directory: '${{ github.workspace }}\ReleaseAssets'
